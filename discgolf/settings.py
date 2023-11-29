@@ -73,7 +73,7 @@ WSGI_APPLICATION = "discgolf.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-print(os.environ.get("DB_NAME"))
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",

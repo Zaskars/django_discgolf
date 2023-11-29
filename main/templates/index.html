@@ -1,0 +1,21 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список турниров</title>
+</head>
+<body>
+    <h1>Турниры</h1>
+    <ul>
+        {% for tournament in tournaments %}
+        <li>
+            <strong>{{ tournament.name }}</strong><br>
+            Дата: {{ tournament.date }}<br>
+            Город: {{ tournament.city }}<br>
+            Макс. игроков: {{ tournament.max_players }}
+        </li>
+        {% empty %}
+        <li>Турниров нет.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

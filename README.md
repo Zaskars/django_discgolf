@@ -1,1 +1,1 @@
-# django_diskgolf
+# django_disсgolf
