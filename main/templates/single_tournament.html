@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ tournament.name }}</title>
+</head>
+<body>
+    <h1>{{ tournament.name }}</h1>
+    <p>Дата: {{ tournament.date }}</p>
+    <p>Город: {{ tournament.city }}</p>
+</body>
+</html>
+{% endblock %}

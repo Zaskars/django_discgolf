@@ -20,7 +20,7 @@
             Макс. игроков: {{ tournament.max_players }}<br>
             Раундов: {{ tournament.rounds_count }}<br>
             Дата: {{ tournament.date }}<br></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <a href="{% url 'single_tournament' tournament.id %}" class="btn btn-primary">Go somewhere</a>
     </div>
 </div>
 <br>

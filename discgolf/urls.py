@@ -19,7 +19,7 @@ from django.urls import path
 from main.views.auth import UserRegisterView, UserLoginView
 from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
-from main.views.tournament import TournamentCreateView
+from main.views.tournament import TournamentCreateView, TournamentDetailView
 
 urlpatterns = [
     path("", TournamentListView.as_view(), name="home"),
@@ -29,5 +29,10 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     path(
         "tournament_create/", TournamentCreateView.as_view(), name="tournament_create"
+    ),
+    path(
+        "single_tournament/<int:pk>",
+        TournamentDetailView.as_view(),
+        name="single_tournament",
     ),
 ]

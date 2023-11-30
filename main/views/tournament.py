@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from main.forms.tournament_create import TournamentForm
 from main.models import Tournament, Round
@@ -27,3 +27,9 @@ class TournamentCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("home")
+
+
+class TournamentDetailView(LoginRequiredMixin, DetailView):
+    model = Tournament
+    template_name = "single_tournament.html"
+    context_object_name = "tournament"
