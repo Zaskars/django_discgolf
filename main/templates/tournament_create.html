@@ -1,5 +1,11 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Создать турнир</button>
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">Создать турнир</button>
 </form>
+{% endblock %}

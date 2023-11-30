@@ -1,22 +1,30 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Список турниров</title>
 </head>
 <body>
-    <h1>Турниры</h1>
-    <ul>
-        {% for tournament in tournaments %}
-        <li>
-            <strong>{{ tournament.name }}</strong><br>
-            Дата: {{ tournament.date }}<br>
-            Город: {{ tournament.city }}<br>
+<h1>Турниры</h1>
+<br>
+{% for tournament in tournaments %}
+<div class="card">
+    <h3 class="card-header">{{ tournament.name }}</h3>
+    <div class="card-body">
+        <p class="card-text">Город: {{ tournament.city }}<br>
             Макс. игроков: {{ tournament.max_players }}<br>
             Раундов: {{ tournament.rounds_count }}<br>
-        </li>
-        {% empty %}
-        <li>Турниров нет.</li>
-        {% endfor %}
-    </ul>
+            Дата: {{ tournament.date }}<br></p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+{% empty %}
+<li>Турниров нет.</li>
+{% endfor %}
 </body>
 </html>
+{% endblock %}
