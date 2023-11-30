@@ -6,6 +6,7 @@
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="btn btn-success">Login</button>
+    <button type="submit" class="btn btn-success">Войти</button>
+    <a href="{% url 'register' %}" class="btn" type="button">Зарегистрироваться</a>
 </form>
 {% endblock %}
