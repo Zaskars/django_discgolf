@@ -33,9 +33,19 @@ class TournamentAdmin(admin.ModelAdmin):
 
 @admin.register(Round)
 class RoundAdmin(admin.ModelAdmin):
-    list_display = ("tournament", "round_number")
+    list_display = ("get_tournament_name", "get_round_name")
     list_filter = ("tournament",)
     search_fields = ("tournament__name",)
+
+    def get_tournament_name(self, obj):
+        return obj.tournament.name
+
+    get_tournament_name.short_description = "Турнир"
+
+    def get_round_name(self, obj):
+        return obj.name  # Предполагается, что у модели Round есть поле name
+
+    get_round_name.short_description = "Название раунда"
 
 
 admin.site.unregister(User)
