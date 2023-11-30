@@ -11,6 +11,18 @@
     <h1>{{ tournament.name }}</h1>
     <p>Дата: {{ tournament.date }}</p>
     <p>Город: {{ tournament.city }}</p>
+    {% if user.is_authenticated and not already_registered %}
+    <form method="post" action="{% url 'tournament_register' tournament.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Регистрация на турнир</button>
+    </form>
+{% endif %}
+<h2>Зарегистрированные участники</h2>
+<ul>
+    {% for registration in registered_players %}
+    <li>{{ registration.player.user.username }}</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
 {% endblock %}
