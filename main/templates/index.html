@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>Турниры</h1>
+<a href="{% url 'tournament_create' %}" class="btn btn-success mt-4 mb-4">Создать турнир</a>
 <br>
 {% for tournament in tournaments %}
 <div class="card">
