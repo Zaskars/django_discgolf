@@ -10,6 +10,8 @@ class TournamentCreateView(LoginRequiredMixin, CreateView):
     model = Tournament
     form_class = TournamentForm
     template_name = "tournament_create.html"
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
 
     def form_valid(self, form):
         response = super(TournamentCreateView, self).form_valid(form)
@@ -33,3 +35,5 @@ class TournamentDetailView(LoginRequiredMixin, DetailView):
     model = Tournament
     template_name = "single_tournament.html"
     context_object_name = "tournament"
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
