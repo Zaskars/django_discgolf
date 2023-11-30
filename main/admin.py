@@ -17,7 +17,7 @@ class UserAdmin(BaseUserAdmin):
 
 class RoundInline(admin.TabularInline):
     model = Round
-    extra = 1  # Количество пустых форм для новых раундов
+    extra = 1
 
 
 @admin.register(Tournament)

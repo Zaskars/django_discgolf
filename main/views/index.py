@@ -25,10 +25,15 @@ class TournamentCreateView(CreateView):
 
     def form_valid(self, form):
         response = super(TournamentCreateView, self).form_valid(form)
-        rounds_count = form.cleaned_data.get("rounds_count")
+        rounds_count = int(self.request.POST.get("num_round"))
 
-        for i in range(rounds_count):
-            Round.objects.create(tournament=self.object, round_number=i + 1)
+        for i in range(1, rounds_count + 1):
+            round_name = self.request.POST.get(f"round{i}")
+            if round_name:
+                # Создание или обновление объекта Round
+                Round.objects.create(
+                    tournament=self.object, round_number=i, name=round_name
+                )
 
         return response
 

@@ -30,6 +30,7 @@ class Round(models.Model):
         Tournament, on_delete=models.CASCADE, related_name="rounds"
     )
     round_number = models.IntegerField()
+    name = models.CharField(max_length=100, default=f"Раунд {round_number}")
 
     def get_registered_players(self):
         # Получение списка зарегистрированных игроков для этого турнира
