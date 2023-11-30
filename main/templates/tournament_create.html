@@ -7,6 +7,12 @@
     <script src="{% static 'assets/js/rounds.js' %}"></script>
 {% endblock %}
 {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Создание турнира</title>
+</head>
+<h1>Создание турнира</h1>
+<br>
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}

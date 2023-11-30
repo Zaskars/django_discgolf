@@ -17,8 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views.auth import UserRegisterView, UserLoginView
-from main.views.index import TournamentListView, TournamentCreateView
+from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
+from main.views.tournament import TournamentCreateView
 
 urlpatterns = [
     path("", TournamentListView.as_view(), name="home"),
