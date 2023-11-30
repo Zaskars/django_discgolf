@@ -14,12 +14,33 @@ class Tournament(models.Model):
     director = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
 
+class TournamentRegistration(models.Model):
+    tournament = models.ForeignKey(
+        Tournament, on_delete=models.CASCADE, related_name="registrations"
+    )
+    player = models.ForeignKey(PlayerProfile, on_delete=models.CASCADE)
+    registration_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("tournament", "player")
+
+
 class Round(models.Model):
-    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    tournament = models.ForeignKey(
+        Tournament, on_delete=models.CASCADE, related_name="rounds"
+    )
     round_number = models.IntegerField()
+
+    def get_registered_players(self):
+        # Получение списка зарегистрированных игроков для этого турнира
+        return [
+            registration.player for registration in self.tournament.registrations.all()
+        ]
 
 
 class PlayerRound(models.Model):
     player = models.ForeignKey(PlayerProfile, on_delete=models.CASCADE)
-    round = models.ForeignKey(Round, on_delete=models.CASCADE)
+    round = models.ForeignKey(
+        Round, on_delete=models.CASCADE, related_name="player_rounds"
+    )
     throws = models.IntegerField(default=0)
