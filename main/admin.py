@@ -43,7 +43,7 @@ class RoundAdmin(admin.ModelAdmin):
     get_tournament_name.short_description = "Турнир"
 
     def get_round_name(self, obj):
-        return obj.name  # Предполагается, что у модели Round есть поле name
+        return obj.name
 
     get_round_name.short_description = "Название раунда"
 

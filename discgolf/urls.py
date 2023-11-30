@@ -21,10 +21,10 @@ from main.views.index import TournamentListView, TournamentCreateView
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
+    path("", TournamentListView.as_view(), name="home"),
     path("admin/", admin.site.urls),
     path("register/", UserRegisterView.as_view(), name="register"),
     path("login/", UserLoginView.as_view(), name="login"),
-    path("home/", TournamentListView.as_view(), name="home"),
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
     path(
         "tournament_create/", TournamentCreateView.as_view(), name="tournament_create"
