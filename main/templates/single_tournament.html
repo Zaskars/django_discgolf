@@ -11,6 +11,12 @@
     <h1>{{ tournament.name }}</h1>
     <p>Дата: {{ tournament.date }}</p>
     <p>Город: {{ tournament.city }}</p>
+    <p>Раунды</p>
+    <ul>
+        {% for round in rounds %}
+            <li>Раунд {{ round.name }}</li>
+        {% endfor %}
+    </ul>
     {% if user.is_authenticated and not already_registered %}
     <form method="post" action="{% url 'tournament_register' tournament.id %}">
         {% csrf_token %}

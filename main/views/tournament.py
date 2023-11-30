@@ -49,6 +49,7 @@ class TournamentDetailView(LoginRequiredMixin, DetailView):
         context["registered_players"] = TournamentRegistration.objects.filter(
             tournament=tournament
         ).select_related("player")
+        context["rounds"] = Round.objects.filter(tournament=tournament)
         return context
 
 
