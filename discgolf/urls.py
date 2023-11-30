@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views.auth import UserRegisterView, UserLoginView
-from main.views.index import TournamentListView
+from main.views.index import TournamentListView, TournamentCreateView
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -26,4 +26,7 @@ urlpatterns = [
     path("login/", UserLoginView.as_view(), name="login"),
     path("home/", TournamentListView.as_view(), name="home"),
     path("logout/", LogoutView.as_view(next_page="/"), name="logout"),
+    path(
+        "tournament_create/", TournamentCreateView.as_view(), name="tournament_create"
+    ),
 ]
