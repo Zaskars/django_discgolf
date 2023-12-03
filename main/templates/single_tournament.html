@@ -26,7 +26,7 @@
 <h2>Зарегистрированные участники</h2>
 <ul>
     {% for registration in registered_players %}
-    <li>{{ registration.player.user.username }}</li>
+    <a href="{% url 'profile' registration.player.id %}">{{ registration.player.user.username }}</a>
     {% endfor %}
 </ul>
 </body>

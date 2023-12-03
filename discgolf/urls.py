@@ -19,6 +19,8 @@ from django.urls import path
 from main.views.auth import UserRegisterView, UserLoginView
 from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
+
+from main.views.profile import ProfileView
 from main.views.tournament import (
     TournamentCreateView,
     TournamentDetailView,
@@ -43,5 +45,10 @@ urlpatterns = [
         "tournament/register/<int:pk>/",
         TournamentRegistrationView.as_view(),
         name="tournament_register",
+    ),
+    path(
+        "profile/<int:pk>",
+        ProfileView.as_view(),
+        name="profile",
     ),
 ]

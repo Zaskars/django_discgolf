@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+    <h1>{{ profile.rating }}</h1>
+    <h1>{{ profile.user.username }}</h1>
+</body>
+{% endblock %}
