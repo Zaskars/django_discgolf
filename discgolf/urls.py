@@ -20,7 +20,7 @@ from main.views.auth import UserRegisterView, UserLoginView
 from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
 
-from main.views.profile import ProfileView
+from main.views.profile import ProfileView, MyProfileView
 from main.views.tournament import (
     TournamentCreateView,
     TournamentDetailView,
@@ -51,4 +51,5 @@ urlpatterns = [
         ProfileView.as_view(),
         name="profile",
     ),
+    path("my-profile/", MyProfileView.as_view(), name="my_profile"),
 ]
