@@ -7,7 +7,6 @@ from .user import PlayerProfile
 
 class Tournament(models.Model):
     name = models.CharField(max_length=100)
-    baskets_count = models.IntegerField()
     date = models.DateField()
     city = models.CharField(max_length=100)
     max_players = models.IntegerField()
