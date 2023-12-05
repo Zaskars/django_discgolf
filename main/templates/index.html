@@ -17,7 +17,7 @@
     <h3 class="card-header">{{ tournament.name }}</h3>
     <div class="card-body">
         <p class="card-text">Город: {{ tournament.city }}<br>
-            Макс. игроков: {{ tournament.max_players }}<br>
+            Макс. игроков: {{ tournament.registered_count }} / {{ tournament.max_players }}<br>
             Раундов: {{ tournament.rounds_count }}<br>
             Дата: {{ tournament.date }}<br></p>
         <a href="{% url 'single_tournament' tournament.id %}" class="btn btn-primary">Go somewhere</a>

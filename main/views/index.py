@@ -15,4 +15,6 @@ class TournamentListView(LoginRequiredMixin, ListView):
     redirect_field_name = "redirect_to"
 
     def get_queryset(self):
-        return Tournament.objects.annotate(rounds_count=Count("rounds"))
+        return Tournament.objects.annotate(
+            rounds_count=Count("rounds"), registered_count=Count("registrations")
+        )
