@@ -17,8 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views.auth import UserRegisterView, UserLoginView
-from main.views.course import CourseCreateView
-from main.views.course_list import CourseListView
+from main.views.course import CourseCreateView, CourseListView
 from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
 
