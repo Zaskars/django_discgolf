@@ -6,11 +6,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Список курсов</title>
+    <title>Список парков</title>
 </head>
 <body>
-<h1>Курсы</h1>
-<a href="{% url 'course_create' %}" class="btn btn-success mt-4 mb-4">Создать курс</a>
+<h1>Парки</h1>
+<a href="{% url 'course_create' %}" class="btn btn-success mt-4 mb-4">Создать парк</a>
 <br>
 {% for course in courses %}
 <div class="card">
@@ -18,13 +18,12 @@
     <div class="card-body">
         <p class="card-text">Город: {{ course.city }}<br>
             Страна: {{ course.country }}<br>
-            Корзин: {{ course.baskets_count }}<br>
-            Par: {{ course.total_par }}<br></p>
+            Схем: {{ course.layouts_count }}<br></p>
     </div>
 </div>
 <br>
 {% empty %}
-<li>Курсов нет.</li>
+<li>Парков нет.</li>
 {% endfor %}
 </body>
 </html>

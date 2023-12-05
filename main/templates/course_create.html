@@ -4,41 +4,41 @@
 {% load crispy_forms_tags %}
 
 {% block scripts %}
-<script src="{% static 'assets/js/baskets.js' %}"></script>
+<script src="{% static 'assets/js/layouts.js' %}"></script>
 {% endblock %}
 {% block content %}
 <head>
     <meta charset="UTF-8">
-    <title>Создание курса</title>
+    <title>Создание парка</title>
 </head>
-<h1>Создание курса</h1>
+<h1>Создание парка</h1>
 <br>
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <div class="basket-append" id="basket_append">
-        {% if baskets %}
-        <input type="hidden" id="num_basket" name="num_basket"
-               value="{{ baskets|length }}">
-        {% for basket in baskets %}
-        <div class="basket input-group">
-            <input placeholder="Пар" value="{{ basket.url }}"
-                   type="number" class="form-control"
-                   id="basket{{ forloop.counter }}"
-                   name="basket{{ forloop.counter }}">
+    <div class="layout-append" id="layout_append">
+        {% if layouts %}
+        <input type="hidden" id="num_layout" name="num_layout"
+               value="{{ layouts|length }}">
+        {% for layout in layouts %}
+        <div class="layout input-group">
+            <input placeholder="Название схемы" value="{{ layout.url }}"
+                   type="text" class="form-control"
+                   id="layout{{ forloop.counter }}"
+                   name="layout{{ forloop.counter }}">
         </div>
         {% endfor %}
         {% else %}
-        <input type="hidden" id="num_basket" name="num_basket" value="1">
-        <div class="basket input-group">
-            <input placeholder="Пар" class="form-control" type="number"
-                   id="basket1" name="basket1">
+        <input type="hidden" id="num_layout" name="num_layout" value="1">
+        <div class="layout input-group">
+            <input placeholder="Название схемы" class="form-control" type="text"
+                   id="layout1" name="layout1">
         </div>
         {% endif %}
     </div>
     <br>
-    <button type="submit" class="btn btn-success">Создать курс</button>
-    <button type="button" class="btn" onclick="new_basket()">Добавить корзину</button>
-    <button type="button" class="btn" onclick="delete_basket()">Удалить корзину</button>
+    <button type="submit" class="btn btn-success">Создать парк</button>
+    <button type="button" class="btn" onclick="new_layout()">Добавить схему</button>
+    <button type="button" class="btn" onclick="delete_layout()">Удалить схему</button>
 </form>
 {% endblock %}
