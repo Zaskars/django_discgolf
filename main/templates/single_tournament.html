@@ -14,7 +14,7 @@
     <p>Раунды</p>
     <ul>
         {% for round in rounds %}
-            <li>Раунд {{ round.name }}</li>
+            <li>{{ round.name }}</li>
         {% endfor %}
     </ul>
     {% if user.is_authenticated and not already_registered %}
