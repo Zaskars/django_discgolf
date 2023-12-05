@@ -25,23 +25,43 @@ class TournamentRegistration(models.Model):
         unique_together = ("tournament", "player")
 
 
+class Course(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Basket(models.Model):
+    course = models.ForeignKey(Course, related_name="baskets", on_delete=models.CASCADE)
+    basket_number = models.IntegerField()
+    par = models.IntegerField()
+
+    def __str__(self):
+        return f"Basket {self.basket_number} of {self.course.name}"
+
+
 class Round(models.Model):
     tournament = models.ForeignKey(
         Tournament, on_delete=models.CASCADE, related_name="rounds"
     )
     round_number = models.IntegerField()
     name = models.CharField(max_length=100, default=f"Раунд {round_number}")
+    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
 
     def get_registered_players(self):
-        # Получение списка зарегистрированных игроков для этого турнира
         return [
             registration.player for registration in self.tournament.registrations.all()
         ]
 
 
-class PlayerRound(models.Model):
+class PlayerScore(models.Model):
     player = models.ForeignKey(PlayerProfile, on_delete=models.CASCADE)
-    round = models.ForeignKey(
-        Round, on_delete=models.CASCADE, related_name="player_rounds"
-    )
-    throws = models.IntegerField(default=0)
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    round = models.ForeignKey(Round, on_delete=models.CASCADE)
+    throws = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.player.user.username} - Round {self.round.round_number}, {self.basket}"
