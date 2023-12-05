@@ -13,6 +13,7 @@ class CourseListView(LoginRequiredMixin, ListView):
     redirect_field_name = "redirect_to"
 
     def get_queryset(self):
-        # Агрегируем сумму PAR для каждого курса
-        queryset = Course.objects.annotate(total_par=Sum("baskets__par"))
+        queryset = Course.objects.annotate(
+            total_par=Sum("baskets__par"), baskets_count=Count("baskets")
+        )
         return queryset
