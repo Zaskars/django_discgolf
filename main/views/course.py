@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Sum
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView
-from main.models import Course, Layout
+from main.models.course import Course, Layout
 from main.forms.course_create import CourseForm
 from django.urls import reverse_lazy
 

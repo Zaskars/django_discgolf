@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from .course import Basket, Course
 from .user import PlayerProfile
 
 
@@ -23,32 +24,6 @@ class TournamentRegistration(models.Model):
 
     class Meta:
         unique_together = ("tournament", "player")
-
-
-class Course(models.Model):
-    name = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-
-
-class Layout(models.Model):
-    course = models.ForeignKey(Course, related_name="layouts", on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"{self.name} at {self.course.name}"
-
-
-class Basket(models.Model):
-    layout = models.ForeignKey(Layout, related_name="baskets", on_delete=models.CASCADE)
-    basket_number = models.IntegerField()
-    par = models.IntegerField()
-
-    def __str__(self):
-        return f"Basket {self.basket_number} of {self.layout.name}"
 
 
 class Round(models.Model):
