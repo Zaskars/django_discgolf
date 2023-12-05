@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список курсов</title>
+</head>
+<body>
+<h1>Курсы</h1>
+<a href="{% url 'course_create' %}" class="btn btn-success mt-4 mb-4">Создать курс</a>
+<br>
+{% for course in courses %}
+<div class="card">
+    <h3 class="card-header">{{ course.name }}</h3>
+    <div class="card-body">
+        <p class="card-text">Город: {{ course.city }}<br>
+            Страна: {{ course.country }}<br>
+            Корзин: {{ course.baskets_count }}<br>
+            Par: {{ course.total_par }}<br></p>
+    </div>
+</div>
+<br>
+{% empty %}
+<li>Курсов нет.</li>
+{% endfor %}
+</body>
+</html>
+{% endblock %}

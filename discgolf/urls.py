@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from main.views.auth import UserRegisterView, UserLoginView
+from main.views.course import CourseCreateView
+from main.views.course_list import CourseListView
 from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
 
@@ -52,4 +54,6 @@ urlpatterns = [
         name="profile",
     ),
     path("my-profile/", MyProfileView.as_view(), name="my_profile"),
+    path("course/create/", CourseCreateView.as_view(), name="course_create"),
+    path("course/list/", CourseListView.as_view(), name="course_list"),
 ]
