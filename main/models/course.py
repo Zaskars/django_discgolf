@@ -19,9 +19,22 @@ class Layout(models.Model):
 
 
 class Basket(models.Model):
-    layout = models.ForeignKey(Layout, related_name="baskets", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name="baskets", on_delete=models.CASCADE)
     basket_number = models.IntegerField()
     par = models.IntegerField()
 
     def __str__(self):
-        return f"Basket {self.basket_number} of {self.layout.name}"
+        return f"Basket {self.basket_number} of {self.course.name}"
+
+
+class LayoutBasket(models.Model):
+    layout = models.ForeignKey(
+        Layout, related_name="layout_baskets", on_delete=models.CASCADE
+    )
+    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ["layout", "basket"]
+
+    def __str__(self):
+        return f"{self.layout.name} - {self.basket}"
