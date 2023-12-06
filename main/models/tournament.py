@@ -46,4 +46,4 @@ class PlayerScore(models.Model):
     throws = models.IntegerField()
 
     def __str__(self):
-        return f"{self.player.user.username} - Round {self.round.round_number}, {self.basket}"
+        return f"{self.player.user.username} - Round {self.round.round_number}, {self.segment}"
