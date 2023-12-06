@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from .course import Basket, Course
+from .course import Basket, Course, Segment
 from .user import PlayerProfile
 
 
@@ -41,7 +41,7 @@ class Round(models.Model):
 
 class PlayerScore(models.Model):
     player = models.ForeignKey(PlayerProfile, on_delete=models.CASCADE)
-    basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
+    segment = models.ForeignKey(Segment, on_delete=models.CASCADE)
     round = models.ForeignKey(Round, on_delete=models.CASCADE)
     throws = models.IntegerField()
 
