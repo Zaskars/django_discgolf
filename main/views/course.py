@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count, Sum
+from django.db.models import Count
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView
 from main.models.course import Course, Layout
@@ -7,7 +7,7 @@ from main.forms.course_create import CourseForm
 from django.urls import reverse_lazy
 
 
-class CourseCreateView(CreateView):
+class CourseCreateView(LoginRequiredMixin, CreateView):
     model = Course
     form_class = CourseForm
     template_name = "course_create.html"
