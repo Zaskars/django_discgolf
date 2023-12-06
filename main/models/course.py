@@ -31,8 +31,8 @@ class Segment(models.Model):
         Layout, related_name="segments", on_delete=models.CASCADE
     )
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
-    tee_number = models.IntegerField()
+    segment_number = models.IntegerField()
     par = models.IntegerField()
 
     def __str__(self):
-        return f"Tee {self.tee_number} for {self.basket} in {self.layout.name}"
+        return f"Tee {self.segment_number} for {self.basket} in {self.layout.name}"
