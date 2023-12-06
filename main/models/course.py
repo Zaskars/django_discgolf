@@ -27,7 +27,9 @@ class Basket(models.Model):
 
 
 class Segment(models.Model):
-    layout = models.ForeignKey(Layout, related_name="segments", on_delete=models.CASCADE)
+    layout = models.ForeignKey(
+        Layout, related_name="segments", on_delete=models.CASCADE
+    )
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE)
     tee_number = models.IntegerField()
     par = models.IntegerField()
