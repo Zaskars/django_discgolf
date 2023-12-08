@@ -7,6 +7,7 @@ from main.models import Tournament, Round
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
+# TODO крч при создании сделать так чтобы кидано на страницу выбора парка
 class TournamentListView(LoginRequiredMixin, ListView):
     model = Tournament
     template_name = "index.html"
@@ -16,5 +17,6 @@ class TournamentListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Tournament.objects.annotate(
-            rounds_count=Count("rounds"), registered_count=Count("registrations")
+            rounds_count=Count("rounds", distinct=True),
+            registered_count=Count("registrations", distinct=True),
         )
