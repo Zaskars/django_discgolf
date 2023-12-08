@@ -26,6 +26,7 @@ from main.views.tournament import (
     TournamentCreateView,
     TournamentDetailView,
     TournamentRegistrationView,
+    TournamentUpdateView,
 )
 
 urlpatterns = [
@@ -46,6 +47,11 @@ urlpatterns = [
         "tournament/register/<int:pk>/",
         TournamentRegistrationView.as_view(),
         name="tournament_register",
+    ),
+    path(
+        "tournament/update/<int:pk>/",
+        TournamentUpdateView.as_view(),
+        name="tournament_update",
     ),
     path(
         "profile/<int:pk>",

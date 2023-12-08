@@ -20,7 +20,10 @@
             Макс. игроков: {{ tournament.registered_count }} / {{ tournament.max_players }}<br>
             Раундов: {{ tournament.rounds_count }}<br>
             Дата: {{ tournament.date }}<br></p>
-        <a href="{% url 'single_tournament' tournament.id %}" class="btn btn-primary">Go somewhere</a>
+        <a href="{% url 'single_tournament' tournament.id %}" class="btn btn-primary">Подробнее</a>
+        {% if tournament.director == request.user %}
+            <a href="{% url 'tournament_update' tournament.id %}" class="btn btn-secondary">Редактировать</a>
+        {% endif %}
     </div>
 </div>
 <br>
