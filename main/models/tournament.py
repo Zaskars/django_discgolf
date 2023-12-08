@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from .course import Basket, Course, Segment
+from .course import Segment, Layout
 from .user import PlayerProfile
 
 
@@ -31,7 +31,10 @@ class Round(models.Model):
     )
     round_number = models.IntegerField()
     name = models.CharField(max_length=100, default=f"Раунд {round_number}")
-    course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    # course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
+    layout = models.ForeignKey(
+        Layout, on_delete=models.SET_NULL, null=True, related_name="rounds"
+    )
 
     def get_registered_players(self):
         return [

@@ -16,29 +16,6 @@
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <div class="round-append" id="round_append">
-        {% if rounds %}
-            <input type="hidden" id="num_round" name="num_round"
-                   value="{{ rounds|length }}">
-            {% for round in rounds %}
-                <div class="round input-group">
-                    <input placeholder="Название раунда" value="{{ round.url }}"
-                           type="text" class="form-control"
-                           id="round{{ forloop.counter }}"
-                           name="round{{ forloop.counter }}">
-                </div>
-            {% endfor %}
-        {% else %}
-            <input type="hidden" id="num_round" name="num_round" value="1">
-            <div class="round input-group">
-                <input placeholder="Название раунда" class="form-control" type="text"
-                       id="round1" name="round1">
-            </div>
-        {% endif %}
-    </div>
-    <br>
     <button type="submit" class="btn btn-success">Создать турнир</button>
-    <button type="button" class="btn" onclick="new_round()">Добавить раунд</button>
-    <button type="button" class="btn" onclick="delete_round()">Удалить раунд</button>
 </form>
 {% endblock %}
