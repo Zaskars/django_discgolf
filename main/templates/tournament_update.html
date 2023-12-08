@@ -9,9 +9,19 @@
     <title>Редактирование турнира</title>
 </head>
 <h1>Редактирование турнира: {{ tournament.name }}</h1>
+<hr>
+<h3>Базовая информация</h3>
 <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Сохранить изменения</button>
 </form>
+<hr>
+<h3>Раунды</h3>
+<a href="{% url 'tournament_update' tournament.id %}">{{ tournament.name }} <span class="badge badge-primary">Турнир</span></a>
+<ul>
+    {% for round in rounds %}
+    <li>{{ round.name }}</li>
+    {% endfor %}
+</ul>
 {% endblock %}
