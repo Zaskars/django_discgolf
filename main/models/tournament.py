@@ -43,7 +43,7 @@ class Round(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.name:
-            self.name = f"Раунд {self.round_number + 1}"
+            self.name = f"Раунд {self.round_number}"
         super().save(*args, **kwargs)
 
 
