@@ -44,7 +44,10 @@ class TournamentDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class TournamentRegistrationView(View):
+class TournamentRegistrationView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def post(self, request, pk):
         tournament = get_object_or_404(Tournament, pk=pk)
         TournamentRegistration.objects.create(
@@ -60,6 +63,12 @@ class TournamentUpdateView(LoginRequiredMixin, UpdateView):
     login_url = "/login/"
     redirect_field_name = "redirect_to"
 
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.director != self.request.user:
+            raise PermissionDenied("Вы не имеете права редактировать этот турнир")
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tournament = self.object
@@ -74,6 +83,12 @@ class AddRoundToTournamentView(LoginRequiredMixin, View):
     login_url = "/login/"
     redirect_field_name = "redirect_to"
 
+    def dispatch(self, request, *args, **kwargs):
+        tournament = get_object_or_404(Tournament, pk=kwargs["tournament_id"])
+        if tournament.director != request.user:
+            raise PermissionDenied("Вы не имеете права добавлять раунды в этот турнир")
+        return super().dispatch(request, *args, **kwargs)
+
     def get(self, request, tournament_id, layout_id):
         tournament = get_object_or_404(Tournament, pk=tournament_id)
         layout = get_object_or_404(Layout, pk=layout_id)
@@ -87,13 +102,16 @@ class AddRoundToTournamentView(LoginRequiredMixin, View):
 
 
 class DeleteRoundFromTournamentView(View):
-    def post(self, request, *args, **kwargs):
-        round = get_object_or_404(Round, pk=kwargs["round_id"])
+    def dispatch(self, request, *args, **kwargs):
+        self.round = get_object_or_404(Round, pk=kwargs["round_id"])
 
-        if round.tournament.director != request.user:
+        if self.round.tournament.director != request.user:
             raise PermissionDenied("Вы не имеете права удалять этот раунд")
 
-        tournament_id = round.tournament.id
-        round.delete()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        tournament_id = self.round.tournament.id
+        self.round.delete()
 
         return redirect(reverse_lazy("tournament_update", kwargs={"pk": tournament_id}))
