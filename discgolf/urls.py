@@ -21,12 +21,14 @@ from main.views.course import CourseCreateView, CourseListView
 from main.views.index import TournamentListView
 from django.contrib.auth.views import LogoutView
 
+from main.views.layout import LayoutSelectionView
 from main.views.profile import ProfileView, MyProfileView
 from main.views.tournament import (
     TournamentCreateView,
     TournamentDetailView,
     TournamentRegistrationView,
     TournamentUpdateView,
+    AddRoundToTournamentView,
 )
 
 urlpatterns = [
@@ -52,6 +54,16 @@ urlpatterns = [
         "tournament/update/<int:pk>/",
         TournamentUpdateView.as_view(),
         name="tournament_update",
+    ),
+    path(
+        "tournament/update/<int:tournament_id>/layout_selection",
+        LayoutSelectionView.as_view(),
+        name="layout_selection",
+    ),
+    path(
+        "tournament/<int:tournament_id>/add_round/<int:layout_id>/",
+        AddRoundToTournamentView.as_view(),
+        name="add_round_to_tournament",
     ),
     path(
         "profile/<int:pk>",

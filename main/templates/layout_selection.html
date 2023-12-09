@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Выбор Layout</title>
+</head>
+<h1>Выберите Layout для раунда</h1>
+<ul>
+    {% for layout in object_list %}
+    <li>
+        <a href="{% url 'add_round_to_tournament' tournament_id=tournament_id layout_id=layout.id %}">{{ layout.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
