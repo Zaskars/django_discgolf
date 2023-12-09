@@ -19,10 +19,10 @@
 <hr>
 <h3>Раунды</h3>
 <a href="{% url 'tournament_update' tournament.id %}">{{ tournament.name }} <span class="badge badge-primary">Турнир</span></a>
-<a href="{% url 'layout_selection' tournament.id %}" class="btn btn-primary">Добавить раунд</a>
-<ul>
+<a href="{% url 'layout_selection' tournament.id %}" class="float-right">Добавить раунд</a>
+<ul style="list-style: none;">
     {% for round in rounds %}
-    <li>{{ round.name }}</li>
+    <li>{{ round.name }}<span class="badge badge-secondary">Раунд</span></li>
     {% endfor %}
 </ul>
 {% endblock %}
