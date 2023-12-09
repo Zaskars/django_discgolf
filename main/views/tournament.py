@@ -4,7 +4,7 @@ from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView
 
 from main.forms.tournament_create import TournamentForm
-from main.models import Tournament, Round, TournamentRegistration
+from main.models import Tournament, Round, TournamentRegistration, Layout
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -67,3 +67,16 @@ class TournamentUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy("home")
+
+
+class AddRoundToTournamentView(View):
+    def get(self, request, tournament_id, layout_id):
+        tournament = get_object_or_404(Tournament, pk=tournament_id)
+        layout = get_object_or_404(Layout, pk=layout_id)
+
+        round_number = tournament.rounds.count() + 1
+        Round.objects.create(
+            tournament=tournament, layout=layout, round_number=round_number
+        )
+
+        return redirect("tournament_update", pk=tournament_id)
