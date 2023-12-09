@@ -1,7 +1,8 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 from main.forms.tournament_create import TournamentForm
 from main.models import Tournament, Round, TournamentRegistration, Layout
@@ -69,7 +70,10 @@ class TournamentUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy("home")
 
 
-class AddRoundToTournamentView(View):
+class AddRoundToTournamentView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def get(self, request, tournament_id, layout_id):
         tournament = get_object_or_404(Tournament, pk=tournament_id)
         layout = get_object_or_404(Layout, pk=layout_id)
@@ -80,3 +84,16 @@ class AddRoundToTournamentView(View):
         )
 
         return redirect("tournament_update", pk=tournament_id)
+
+
+class DeleteRoundFromTournamentView(View):
+    def post(self, request, *args, **kwargs):
+        round = get_object_or_404(Round, pk=kwargs["round_id"])
+
+        if round.tournament.director != request.user:
+            raise PermissionDenied("Вы не имеете права удалять этот раунд")
+
+        tournament_id = round.tournament.id
+        round.delete()
+
+        return redirect(reverse_lazy("tournament_update", kwargs={"pk": tournament_id}))

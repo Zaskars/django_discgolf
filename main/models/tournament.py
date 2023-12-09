@@ -30,7 +30,7 @@ class Round(models.Model):
         Tournament, on_delete=models.CASCADE, related_name="rounds"
     )
     round_number = models.IntegerField()
-    name = models.CharField(max_length=100, default=f"Раунд {round_number}")
+    name = models.CharField(max_length=100, blank=True)
     # course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     layout = models.ForeignKey(
         Layout, on_delete=models.SET_NULL, null=True, related_name="rounds"
@@ -40,6 +40,11 @@ class Round(models.Model):
         return [
             registration.player for registration in self.tournament.registrations.all()
         ]
+
+    def save(self, *args, **kwargs):
+        if not self.name:
+            self.name = f"Раунд {self.round_number + 1}"
+        super().save(*args, **kwargs)
 
 
 class PlayerScore(models.Model):

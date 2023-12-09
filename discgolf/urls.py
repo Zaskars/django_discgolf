@@ -29,6 +29,7 @@ from main.views.tournament import (
     TournamentRegistrationView,
     TournamentUpdateView,
     AddRoundToTournamentView,
+    DeleteRoundFromTournamentView,
 )
 
 urlpatterns = [
@@ -56,7 +57,7 @@ urlpatterns = [
         name="tournament_update",
     ),
     path(
-        "tournament/update/<int:tournament_id>/layout_selection",
+        "tournament/update/<int:tournament_id>/round/layout_selection",
         LayoutSelectionView.as_view(),
         name="layout_selection",
     ),
@@ -64,6 +65,11 @@ urlpatterns = [
         "tournament/<int:tournament_id>/add_round/<int:layout_id>/",
         AddRoundToTournamentView.as_view(),
         name="add_round_to_tournament",
+    ),
+    path(
+        "tournament/<int:tournament_id>/delete_round/<int:round_id>/",
+        DeleteRoundFromTournamentView.as_view(),
+        name="delete_round_from_tournament",
     ),
     path(
         "profile/<int:pk>",

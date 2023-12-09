@@ -18,11 +18,18 @@
 </form>
 <hr>
 <h3>Раунды</h3>
-<a href="{% url 'tournament_update' tournament.id %}">{{ tournament.name }} <span class="badge badge-primary">Турнир</span></a>
+<a href="{% url 'tournament_update' tournament.id %}">{{ tournament.name }} <span
+        class="badge badge-primary">Турнир</span></a>
 <a href="{% url 'layout_selection' tournament.id %}" class="float-right">Добавить раунд</a>
 <ul style="list-style: none;">
     {% for round in rounds %}
-    <li>{{ round.name }}<span class="badge badge-secondary">Раунд</span></li>
+    <li>{{ round.name }} <span class="badge badge-secondary">Раунд</span> <span class="badge badge-info">{{ round.layout }}</span>
+        <form action="{% url 'delete_round_from_tournament' tournament_id=tournament.id round_id=round.id%}"
+              method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+    </li>
     {% endfor %}
 </ul>
 {% endblock %}
