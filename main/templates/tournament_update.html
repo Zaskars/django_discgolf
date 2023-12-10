@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактирование турнира</title>
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 </head>
 <h1>Редактирование турнира: {{ tournament.name }}</h1>
 <hr>
@@ -31,7 +32,7 @@
                 </div>
                 <form action="{% url 'delete_round_from_tournament' tournament_id=tournament.id round_id=round.id%}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-link">Удалить</button>
+                    <button type="submit" class="delete_round_button">Удалить</button>
                 </form>
             </li>
             {% endfor %}
