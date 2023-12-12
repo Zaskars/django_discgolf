@@ -28,7 +28,7 @@
             {% for round in rounds %}
             <li class="d-flex justify-content-between align-items-center mt-1">
                 <div>
-                    {{ round.name }} <span class="badge badge-secondary">Раунд</span> <span class="badge badge-info">{{ round.layout }}</span>
+                    <a href="{% url 'single_round' tournament_id=tournament.id round_number=round.round_number %}">{{ round.name }}</a> <span class="badge badge-secondary">Раунд</span> <span class="badge badge-info">{{ round.layout }}</span>
                 </div>
                 <form action="{% url 'delete_round_from_tournament' tournament_id=tournament.id round_id=round.id%}" method="post">
                     {% csrf_token %}

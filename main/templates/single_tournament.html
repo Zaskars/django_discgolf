@@ -14,7 +14,7 @@
     <p>Раунды</p>
     <ul>
         {% for round in rounds %}
-            <li>{{ round.name }}</li>
+            <li><a href="{% url 'single_round' tournament_id=tournament.id round_number=round.round_number %}">{{ round.name }}</a></li>
         {% endfor %}
     </ul>
     {% if user.is_authenticated and not already_registered %}

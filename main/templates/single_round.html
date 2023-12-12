@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ round.name }}</title>
+</head>
+<body>
+    <h1>{{ round.name }}</h1>
+    <p>Турнир: {{ round.tournament.name }}</p>
+    <p>Город: {{ round.tournament.city }}</p>
+</body>
+</html>
+{% endblock %}

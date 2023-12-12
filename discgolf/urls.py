@@ -23,6 +23,7 @@ from django.contrib.auth.views import LogoutView
 
 from main.views.layout import LayoutSelectionView
 from main.views.profile import ProfileView, MyProfileView
+from main.views.round import RoundDetailView
 from main.views.tournament import (
     TournamentCreateView,
     TournamentDetailView,
@@ -42,7 +43,7 @@ urlpatterns = [
         "tournament_create/", TournamentCreateView.as_view(), name="tournament_create"
     ),
     path(
-        "single_tournament/<int:pk>",
+        "tournament/<int:pk>",
         TournamentDetailView.as_view(),
         name="single_tournament",
     ),
@@ -60,6 +61,11 @@ urlpatterns = [
         "tournament/update/<int:tournament_id>/round/layout_selection",
         LayoutSelectionView.as_view(),
         name="layout_selection",
+    ),
+    path(
+        "tournament/<int:tournament_id>/round/<int:round_number>",
+        RoundDetailView.as_view(),
+        name="single_round",
     ),
     path(
         "tournament/<int:tournament_id>/add_round/<int:layout_id>/",
