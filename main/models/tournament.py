@@ -18,7 +18,7 @@ class Tournament(models.Model):
         super(Tournament, self).save(*args, **kwargs)
 
         if is_new:
-            group, _ = Group.objects.get_or_create(name='Tournament Directors')
+            group, _ = Group.objects.get_or_create(name="Tournament Directors")
             self.director.groups.add(group)
 
 
