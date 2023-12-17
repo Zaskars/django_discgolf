@@ -13,6 +13,14 @@ class Tournament(models.Model):
     park_scheme = models.ImageField(upload_to="park_schemes/", null=True, blank=True)
     director = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        super(Tournament, self).save(*args, **kwargs)
+
+        if is_new:
+            group, _ = Group.objects.get_or_create(name='Tournament Directors')
+            self.director.groups.add(group)
+
 
 class TournamentRegistration(models.Model):
     tournament = models.ForeignKey(
