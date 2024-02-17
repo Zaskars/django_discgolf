@@ -40,6 +40,11 @@ class TournamentDetailView(LoginRequiredMixin, DetailView):
         context["registered_players"] = TournamentRegistration.objects.filter(
             tournament=tournament
         ).select_related("player")
+        context["is_full"] = (
+            TournamentRegistration.objects.filter(tournament=tournament).count()
+            >= tournament.max_players
+        )
+        print(context["is_full"], context["already_registered"])
         context["rounds"] = Round.objects.filter(tournament=tournament)
         return context
 
@@ -50,10 +55,16 @@ class TournamentRegistrationView(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         tournament = get_object_or_404(Tournament, pk=pk)
-        TournamentRegistration.objects.create(
-            tournament=tournament, player=request.user.playerprofile
-        )
-        return redirect("single_tournament", pk=pk)
+        already_registered_count = TournamentRegistration.objects.filter(
+            tournament=tournament
+        ).count()
+        if tournament.max_players != already_registered_count:
+            TournamentRegistration.objects.create(
+                tournament=tournament, player=request.user.playerprofile
+            )
+            return redirect("single_tournament", pk=pk)
+        else:
+            raise PermissionDenied("Все места на турнир заняты.")
 
 
 class TournamentUpdateView(LoginRequiredMixin, UpdateView):
@@ -104,7 +115,6 @@ class AddRoundToTournamentView(LoginRequiredMixin, View):
 class DeleteRoundFromTournamentView(View):
     def dispatch(self, request, *args, **kwargs):
         self.round = get_object_or_404(Round, pk=kwargs["round_id"])
-
         if self.round.tournament.director != request.user:
             raise PermissionDenied("Вы не имеете права удалять этот раунд")
 
