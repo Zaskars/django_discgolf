@@ -21,7 +21,7 @@ class TournamentCreateView(LoginRequiredMixin, CreateView):
         return super(TournamentCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("home")
+        return reverse_lazy("tournament_update", kwargs={"pk": self.object.pk})
 
 
 class TournamentDetailView(LoginRequiredMixin, DetailView):
@@ -44,7 +44,6 @@ class TournamentDetailView(LoginRequiredMixin, DetailView):
             TournamentRegistration.objects.filter(tournament=tournament).count()
             >= tournament.max_players
         )
-        print(context["is_full"], context["already_registered"])
         context["rounds"] = Round.objects.filter(tournament=tournament)
         return context
 
