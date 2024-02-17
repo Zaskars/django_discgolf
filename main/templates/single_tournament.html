@@ -17,7 +17,7 @@
             <li><a href="{% url 'single_round' tournament_id=tournament.id round_number=round.round_number %}">{{ round.name }}</a></li>
         {% endfor %}
     </ul>
-    {% if user.is_authenticated and not already_registered %}
+    {% if user.is_authenticated and not already_registered and not is_full %}
     <form method="post" action="{% url 'tournament_register' tournament.id %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-success">Регистрация на турнир</button>
