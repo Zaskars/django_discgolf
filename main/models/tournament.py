@@ -39,7 +39,6 @@ class Round(models.Model):
     )
     round_number = models.IntegerField()
     name = models.CharField(max_length=100, blank=True)
-    # course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     layout = models.ForeignKey(
         Layout, on_delete=models.SET_NULL, null=True, related_name="rounds"
     )

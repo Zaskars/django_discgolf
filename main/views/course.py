@@ -20,7 +20,6 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
         for i in range(1, layouts_count + 1):
             layout_name = self.request.POST.get(f"layout{i}")
             if layout_name:
-                # Создание или обновление объекта layout
                 Layout.objects.create(course=self.object, name=layout_name)
 
         return response
