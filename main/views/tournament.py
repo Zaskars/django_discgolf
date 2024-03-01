@@ -1,4 +1,5 @@
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -54,16 +55,27 @@ class TournamentRegistrationView(LoginRequiredMixin, View):
 
     def post(self, request, pk):
         tournament = get_object_or_404(Tournament, pk=pk)
+        already_registered = TournamentRegistration.objects.filter(
+            tournament=tournament, player=request.user.playerprofile
+        ).exists()
+
+        if already_registered:
+            return HttpResponseForbidden("Вы уже зарегистрированы на этот турнир.")
+
         already_registered_count = TournamentRegistration.objects.filter(
             tournament=tournament
         ).count()
-        if tournament.max_players != already_registered_count:
+
+        if tournament.max_players > already_registered_count:
             TournamentRegistration.objects.create(
                 tournament=tournament, player=request.user.playerprofile
             )
             return redirect("single_tournament", pk=pk)
         else:
             raise PermissionDenied("Все места на турнир заняты.")
+
+    def get(self, request, *args, **kwargs):
+        return redirect("home")
 
 
 class TournamentUpdateView(LoginRequiredMixin, UpdateView):
