@@ -100,6 +100,20 @@ class TournamentUpdateView(LoginRequiredMixin, UpdateView):
         ).select_related("player")
         return context
 
+    def form_valid(self, form):
+        registered_players_count = TournamentRegistration.objects.filter(
+            tournament=self.object
+        ).count()
+
+        if form.cleaned_data["max_players"] < registered_players_count:
+            form.add_error(
+                "max_players",
+                "Нельзя установить количество мест меньше, чем уже зарегистрированных игроков.",
+            )
+            return self.form_invalid(form)
+
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse_lazy("home")
 
