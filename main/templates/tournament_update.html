@@ -18,7 +18,7 @@
     <button type="submit" class="btn btn-success">Сохранить изменения</button>
 </form>
 <hr>
-<h3>Раунды</h3>
+<h3>Структура</h3>
 <a href="{% url 'tournament_update' tournament.id %}">{{ tournament.name }} <span
         class="badge badge-primary">Турнир</span></a>
 <a href="{% url 'layout_selection' tournament.id %}" class="float-right">Добавить раунд</a>
@@ -34,6 +34,21 @@
                     {% csrf_token %}
                     <button type="submit" class="delete_round_button">Удалить</button>
                 </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
+<hr>
+<h3>Игроки</h3>
+<ul style="list-style: none; padding-left: 0;">
+    <li>
+        <ul style="list-style: none; padding-left: 20px;">
+            {% for registration in registered_players %}
+            <li class="d-flex justify-content-between align-items-center mt-1">
+                <div>
+                    <a href="{% url 'profile' registration.player.id %}">{{ registration.player.user.username }}</a>
+                </div>
             </li>
             {% endfor %}
         </ul>

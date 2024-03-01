@@ -95,6 +95,9 @@ class TournamentUpdateView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         tournament = self.object
         context["rounds"] = Round.objects.filter(tournament=tournament)
+        context["registered_players"] = TournamentRegistration.objects.filter(
+            tournament=tournament
+        ).select_related("player")
         return context
 
     def get_success_url(self):
