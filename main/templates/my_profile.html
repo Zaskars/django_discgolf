@@ -8,8 +8,9 @@
     <title>Профиль</title>
 </head>
 <body>
-    <h1>Профиль пользователя {{ user.username }}</h1>
-    <p>Email: {{ user.email }}</p>
+<h1>Email: {{ profile.user.email }}</h1>
+<h1>Username: {{ profile.user.username }}</h1>
+<h1>Rating: {{ profile.rating }}</h1>
 </body>
 </html>
 {% endblock %}
