@@ -1,12 +1,12 @@
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 from main.forms.tournament_create import TournamentForm
-from main.models import Tournament, Round, TournamentRegistration, Layout
+from main.models import Tournament, Round, TournamentRegistration, Layout, PlayerProfile
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -151,5 +151,28 @@ class DeleteRoundFromTournamentView(View):
     def post(self, request, *args, **kwargs):
         tournament_id = self.round.tournament.id
         self.round.delete()
+
+        return redirect(reverse_lazy("tournament_update", kwargs={"pk": tournament_id}))
+
+
+class DeletePlayerFromTournamentView(View):
+    def dispatch(self, request, *args, **kwargs):
+        self.player = get_object_or_404(PlayerProfile, pk=kwargs["player_id"])
+        self.tournament = get_object_or_404(Tournament, pk=kwargs["tournament_id"])
+        if self.tournament.director != request.user:
+            raise PermissionDenied("Вы не имеете права удалять игрока")
+        if not TournamentRegistration.objects.filter(
+            tournament=self.tournament, player=self.player
+        ).exists():
+            raise Http404("Этот игрок не зарегистрирован на этом раунде")
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        tournament_id = self.tournament.id
+        registration = TournamentRegistration.objects.get(
+            tournament=self.tournament, player=self.player
+        )
+        registration.delete()
 
         return redirect(reverse_lazy("tournament_update", kwargs={"pk": tournament_id}))

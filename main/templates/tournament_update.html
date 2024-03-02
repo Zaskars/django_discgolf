@@ -49,6 +49,10 @@
                 <div>
                     <a href="{% url 'profile' registration.player.id %}">{{ registration.player.user.username }}</a>
                 </div>
+                <form action="{% url 'delete_player_from_tournament' tournament_id=tournament.id player_id=registration.player.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="delete_round_button">Удалить</button>
+                </form>
             </li>
             {% endfor %}
         </ul>
