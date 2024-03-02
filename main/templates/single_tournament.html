@@ -12,12 +12,22 @@
     <p>Дата: {{ tournament.date }}</p>
     <p>Город: {{ tournament.city }}</p>
     <hr>
-    <p>Раунды</p>
-    <ul>
-        {% for round in rounds %}
-            <li><a href="{% url 'single_round' tournament_id=tournament.id round_number=round.round_number %}">{{ round.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <h3>Структура</h3>
+    <a href="{% url 'tournament_update' tournament.id %}">{{ tournament.name }} <span
+        class="badge badge-primary">Турнир</span></a>
+    <ul style="list-style: none; padding-left: 0;">
+    <li>
+        <ul style="list-style: none; padding-left: 20px;">
+            {% for round in rounds %}
+            <li class="d-flex justify-content-between align-items-center mt-1">
+                <div>
+                    <a href="{% url 'single_round' tournament_id=tournament.id round_number=round.round_number %}">{{ round.name }}</a> <span class="badge badge-secondary">Раунд</span> <span class="badge badge-info">{{ round.layout }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+</ul>
     {% if user.is_authenticated and not already_registered and not is_full %}
     <form method="post" action="{% url 'tournament_register' tournament.id %}">
         {% csrf_token %}
@@ -25,11 +35,19 @@
     </form>
 {% endif %}
     <hr>
-<p>Зарегистрированные участники</p>
-<ul>
-    {% for registration in registered_players %}
-    <li><a href="{% url 'profile' registration.player.id %}">{{ registration.player.user.username }}</a>
-    {% endfor %}
+<h3>Игроки</h3>
+<ul style="list-style: none; padding-left: 0;">
+    <li>
+        <ul style="list-style: none; padding-left: 20px;">
+            {% for registration in registered_players %}
+            <li class="d-flex justify-content-between align-items-center mt-1">
+                <div>
+                    <a href="{% url 'profile' registration.player.id %}">{{ registration.player.user.username }}</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
 </ul>
 </body>
 </html>
