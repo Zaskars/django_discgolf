@@ -140,7 +140,10 @@ class AddRoundToTournamentView(LoginRequiredMixin, View):
         return redirect("tournament_update", pk=tournament_id)
 
 
-class DeleteRoundFromTournamentView(View):
+class DeleteRoundFromTournamentView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def dispatch(self, request, *args, **kwargs):
         self.round = get_object_or_404(Round, pk=kwargs["round_id"])
         if self.round.tournament.director != request.user:
@@ -155,7 +158,10 @@ class DeleteRoundFromTournamentView(View):
         return redirect(reverse_lazy("tournament_update", kwargs={"pk": tournament_id}))
 
 
-class DeletePlayerFromTournamentView(View):
+class DeletePlayerFromTournamentView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def dispatch(self, request, *args, **kwargs):
         self.player = get_object_or_404(PlayerProfile, pk=kwargs["player_id"])
         self.tournament = get_object_or_404(Tournament, pk=kwargs["tournament_id"])
@@ -179,6 +185,9 @@ class DeletePlayerFromTournamentView(View):
 
 
 class LeaveFromTournamentView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
     def post(self, request, tournament_id):
         tournament = get_object_or_404(Tournament, pk=tournament_id)
         registration = TournamentRegistration.objects.filter(
