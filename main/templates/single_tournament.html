@@ -28,14 +28,25 @@
         </ul>
     </li>
 </ul>
-    {% if user.is_authenticated and not already_registered and not is_full %}
-    <form method="post" action="{% url 'tournament_register' tournament.id %}">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-success">Регистрация на турнир</button>
-    </form>
-{% endif %}
     <hr>
-<h3>Игроки</h3>
+
+    <div class="d-flex">
+        <h3>Игроки</h3>
+        {% if user.is_authenticated %}
+            {% if not already_registered and not is_full %}
+                <form method="post" action="{% url 'tournament_register' tournament.id %}" class="ml-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Регистрация на турнир</button>
+                    </form>
+            {% elif already_registered %}
+                <form method="post" action="{% url 'leave_from_tournament' tournament.id %}" class="ml-3">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Отменить регистрацию</button>
+                    </form>
+            {% endif %}
+    {% endif %}
+    </div>
+
 <ul style="list-style: none; padding-left: 0;">
     <li>
         <ul style="list-style: none; padding-left: 20px;">

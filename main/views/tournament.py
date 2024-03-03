@@ -164,7 +164,7 @@ class DeletePlayerFromTournamentView(View):
         if not TournamentRegistration.objects.filter(
             tournament=self.tournament, player=self.player
         ).exists():
-            raise Http404("Этот игрок не зарегистрирован на этом раунде")
+            raise Http404("Этот игрок не зарегистрирован в этом раунде")
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -176,3 +176,20 @@ class DeletePlayerFromTournamentView(View):
         registration.delete()
 
         return redirect(reverse_lazy("tournament_update", kwargs={"pk": tournament_id}))
+
+
+class LeaveFromTournamentView(LoginRequiredMixin, View):
+    def post(self, request, tournament_id):
+        tournament = get_object_or_404(Tournament, pk=tournament_id)
+        registration = TournamentRegistration.objects.filter(
+            tournament=tournament, player=request.user.playerprofile
+        ).first()
+
+        if registration:
+            registration.delete()
+            return redirect("single_tournament", pk=tournament_id)
+        else:
+            return HttpResponseForbidden("Вы еще не зарегистрированы на этот турнир.")
+
+    def get(self, request, *args, **kwargs):
+        return redirect("home")

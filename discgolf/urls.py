@@ -32,6 +32,7 @@ from main.views.tournament import (
     AddRoundToTournamentView,
     DeleteRoundFromTournamentView,
     DeletePlayerFromTournamentView,
+    LeaveFromTournamentView,
 )
 
 urlpatterns = [
@@ -82,6 +83,11 @@ urlpatterns = [
         "tournament/<int:tournament_id>/delete_player/<int:player_id>/",
         DeletePlayerFromTournamentView.as_view(),
         name="delete_player_from_tournament",
+    ),
+    path(
+        "tournament/<int:tournament_id>/leave_tournament/",
+        LeaveFromTournamentView.as_view(),
+        name="leave_from_tournament",
     ),
     path(
         "profile/<int:pk>",
