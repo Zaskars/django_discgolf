@@ -1,6 +1,8 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
+from django.views import View
+from django.views.generic import ListView, DetailView, UpdateView
 from main.models import Layout, Tournament
 
 
@@ -18,3 +20,19 @@ class LayoutSelectionView(ListView):
         context = super().get_context_data(**kwargs)
         context["tournament_id"] = self.kwargs.get("tournament_id")
         return context
+
+
+class LayoutDetailView(LoginRequiredMixin, DetailView):
+    pass
+
+
+class LayoutUpdateView(LoginRequiredMixin, UpdateView):
+    pass
+
+
+class LayoutDeleteView(View):
+    pass
+
+
+class SchemaDeleteView(View):
+    pass
