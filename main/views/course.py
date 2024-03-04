@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 from main.models.course import Course, Layout
 from main.forms.course_create import CourseForm
@@ -35,3 +35,11 @@ class CourseListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         queryset = Course.objects.annotate(layouts_count=Count("layouts"))
         return queryset
+
+
+class CourseDetailView(LoginRequiredMixin, DetailView):
+    model = Course
+    template_name = "single_course.html"
+    context_object_name = "course"
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ course.name }}</title>
+</head>
+<body>
+<h1>{{ course.name }}</h1>
+<p>Страна: {{ course.country }}</p>
+<p>Город: {{ course.city }}</p>
+</body>
+</html>
+{% endblock %}
