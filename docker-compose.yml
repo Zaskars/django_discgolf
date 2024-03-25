@@ -1,26 +1,37 @@
-version: '3.1'
+version: '3.8'
 
 services:
   db:
-    image: postgres
-    ports:
-      - "${DB_PORT}:${DB_PORT}"
-    environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
+    image: postgres:13
+    container_name: pgdb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: discgolf
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 72metra
+    ports:
+      - "5432:5432"
 
   web:
+    tty: true
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    command: >
+      sh -c "python urlshortener/manage.py migrate &&
+             python urlshortener/manage.py runserver 0.0.0.0:8000"
+    container_name: django
     volumes:
-      - .:/usr/src/app
+      - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
+    environment:
+      DB_NAME: discgolf
+      DB_USER: postgres
+      DB_PASS: 72metra
+      DB_PORT: 5432
+      DJANGO_SETTINGS_MODULE: urlshortener.settings
 
 volumes:
   postgres_data:
