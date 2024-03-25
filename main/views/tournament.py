@@ -42,8 +42,8 @@ class TournamentDetailView(LoginRequiredMixin, DetailView):
             tournament=tournament
         ).select_related("player")
         context["is_full"] = (
-            TournamentRegistration.objects.filter(tournament=tournament).count()
-            >= tournament.max_players
+                TournamentRegistration.objects.filter(tournament=tournament).count()
+                >= tournament.max_players
         )
         context["rounds"] = Round.objects.filter(tournament=tournament)
         return context
@@ -168,7 +168,7 @@ class DeletePlayerFromTournamentView(LoginRequiredMixin, View):
         if self.tournament.director != request.user:
             raise PermissionDenied("Вы не имеете права удалять игрока")
         if not TournamentRegistration.objects.filter(
-            tournament=self.tournament, player=self.player
+                tournament=self.tournament, player=self.player
         ).exists():
             raise Http404("Этот игрок не зарегистрирован в этом раунде")
 
